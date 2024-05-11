@@ -1,0 +1,111 @@
+import streamlit as st
+from datetime import date
+
+# Set page title and icon
+st.set_page_config(
+    page_title="HR Recruitment Expert System",
+    page_icon="/content/Ria_Main_Logo_Descriptor_Color_RGB.png"  # Replace "path_to_ria_logo.png" with the path to your RIA Money Exchange logo
+)
+
+# Set branding and logo
+st.image("/content/Ria_Main_Logo_Descriptor_Color_RGB.png", use_column_width=True)  # Replace "path_to_ria_logo.png" with the path to your RIA Money Exchange logo
+st.title("HR Recruitment Expert System")
+
+# Set color scheme
+primary_color = "#F15A24"  # Orange
+secondary_color = "#800080"  # Purple
+background_color = "#FFFFFF"  # White
+
+# Set CSS styles
+st.markdown(
+    f"""
+    <style>
+    .reportview-container {{
+        background-color: {background_color};
+    }}
+    .sidebar .sidebar-content {{
+        background-color: {primary_color};
+        color: white;
+    }}
+    .Widget .content {{
+        color: {secondary_color};
+    }}
+    .stButton button {{
+        background-color: {secondary_color};
+        color: white;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Login section
+st.header("Login")
+
+username = st.text_input("Username")
+password = st.text_input("Password", type="password")
+
+if st.button("Login"):
+    if username == "admin" and password == "password":
+        st.success("Logged in as admin")
+    else:
+        st.error("Invalid username or password")
+
+# Main content
+if username == "admin" and password == "password":
+    st.header("Resume Vetting")
+    st.write("Welcome to the HR Recruitment Expert System of RIA Money Exchange.")
+    st.write("Please select an applicant from the dropdown menu to vet their resume.")
+
+    # Dropdown menu
+    applicants = ["John Doe", "Jane Smith", "Robert Johnson"]
+    selected_applicant = st.selectbox("Select an applicant", applicants)
+
+    st.write(f"Selected applicant: {selected_applicant}")
+
+    # Applicant details
+    st.subheader("Applicant Details")
+    applicant_info = {
+        "Name": selected_applicant,
+        "Email": "john.doe@example.com",
+        "Phone": "+1 123-456-7890",
+        "Experience": "5 years",
+        "Skills": "Python, Java, SQL",
+    }
+    for key, value in applicant_info.items():
+        st.write(f"**{key}:** {value}")
+
+    # Resume upload
+    st.subheader("Upload Resume")
+    uploaded_file = st.file_uploader("Choose a file", type=["pdf", "docx"])
+
+    if uploaded_file is not None:
+        st.success("Resume uploaded successfully!")
+
+    # Vetting result
+    st.subheader("Vetting Result")
+    vetting_result = st.radio(
+        "Is the applicant suitable for the position?",
+        ("Yes", "No")
+    )
+
+    if vetting_result == "Yes":
+        st.success("The applicant is suitable for the position.")
+    elif vetting_result == "No":
+        st.error("The applicant is not suitable for the position.")
+
+    # Comments
+    st.subheader("Comments")
+    comments = st.text_area("Add comments", height=100)
+    st.write("Comments:", comments)
+
+    # Menu button
+    st.subheader("Menu")
+    menu_options = ["Dashboard", "Applicants", "Settings"]
+    selected_option = st.selectbox("Select an option", menu_options)
+    st.write(f"Selected option: {selected_option}")
+
+    # Calendar
+    st.subheader("Calendar")
+    today = date.today()
+    st.write(f"Today's date: {today}")
